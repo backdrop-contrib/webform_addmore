@@ -1,1 +1,9 @@
-"name = Webform Add More" 
+; $Id$
+name = Webform Add More
+description = Webform add more fieldset setting.
+package = Webform
+
+dependencies[] = webform
+
+files[] = webform_addmore.install
+files[] = webform_addmore.module
