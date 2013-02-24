@@ -1,4 +1,3 @@
-$Id$
 
 Description
 -------------
@@ -21,7 +20,17 @@ Usage
 -------------
 After enabling the module, configure two or more webform fieldsets to use Add
 More. To change the Add more button label, edit the Form settings Advanced 
-settings.
+settings. ANY ADD MORE FIELDSETS MUST BE CONTAINED WITHIN A PARENT FIELDSET.
+
+EXAMPLE STRUCTURE:
+
+-CHILDREN (containing fieldset)
+--CHILD 1 (add more fieldset)
+---Child Name (textfield)
+--CHILD 2 (add more fieldset)
+---Child Name (textfield)
+--CHILD 2 (add more fieldset)
+---Child Name (textfield)
 
 
 Download
@@ -31,15 +40,17 @@ project page on the Drupal web site.
 http://drupal.org/project/webform_addmore
 
 
-Todo List
--------------
-None
-
-
-Author
+Original Author
 -------------
 John Money
 ossemble LLC.
 http://ossemble.com
+
+
+Current Maintainer
+--------------
+Chris Hertzog
+CODEwork Designs
+http://www.codeworkdesigns.com
 
 All credit to span and kranklin who originally proposed the approach and code.
