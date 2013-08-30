@@ -53,7 +53,7 @@ function webform_addmore_webform_component_presave(&$component) {
   }
   if(isset($component['extra']['addmore'])){
     $settings = variable_get('webform_addmore_' . $component['nid'], array());
-    $settings[$component['cid']] = $component['extra']['addmore'];
+    $settings[$component['cid']] = isset($component['extra']['addmore']) ? $component['extra']['addmore'] : '';
     variable_set('webform_addmore_' . $component['nid'], $settings);
   }
 }
@@ -84,12 +84,12 @@ function webform_addmore_form_webform_configure_form_alter(&$form, $form_state) 
   $form['advanced']['addmore_add'] = array(
     '#type' => 'textfield',
     '#title' => t('Add More button text'),
-    '#default_value' => $settings['addlabel'],
+    '#default_value' => isset($settings['addlabel']) ? $settings['addlabel'] : '',
   );
   $form['advanced']['addmore_del'] = array(
     '#type' => 'textfield',
     '#title' => t('Delete button text'),
-    '#default_value' => $settings['dellabel'],
+    '#default_value' => isset($settings['dellabel']) ? $settings['dellabel'] : '',
   );
 
   $form['#submit'][] = 'webform_addmore_webform_configure_submit';
