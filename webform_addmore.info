@@ -1,0 +1,6 @@
+name = Webform Add More
+description = Hide/Show Webform items in fieldsets using add/remove buttons.
+core = 7.x
+package = Webform
+
+dependencies[] = webform
