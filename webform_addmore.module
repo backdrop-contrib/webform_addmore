@@ -136,7 +136,7 @@ function _webform_addmore_client_form_ajaxify(&$element, &$form_state) {
         $i++;
       }
       else {
-        unset($element[$key]);
+        $element[$key]['#access'] = FALSE;
       }
     }
     // Generate add and remove buttons.
