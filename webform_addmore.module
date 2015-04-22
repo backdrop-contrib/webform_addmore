@@ -136,7 +136,10 @@ function _webform_addmore_client_form_ajaxify(&$element, &$form_state) {
         $i++;
       }
       else {
+        // We can't just 'unset' these, as some other modules
+        // like clientside_validation expect them.
         $element[$key]['#access'] = FALSE;
+        _webform_addmore_element_unrequire($element[$key]);
       }
     }
     // Generate add and remove buttons.
@@ -154,6 +157,18 @@ function _webform_addmore_client_form_ajaxify(&$element, &$form_state) {
     foreach (element_children($element) as $key) {
       _webform_addmore_client_form_ajaxify($element[$key], $form_state);
     }
+  }
+}
+
+/**
+ * Helper function. Sets the #required property of an element
+ * and its children to FALSE.
+ * @param array $element of a webform.
+ */
+function _webform_addmore_element_unrequire(&$element) {
+  $element['#required'] = FALSE;
+  foreach (element_children($element) as $key) {
+    _webform_addmore_element_unrequire($element[$key]);
   }
 }
 
