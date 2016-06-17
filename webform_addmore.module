@@ -154,8 +154,10 @@ function _webform_addmore_client_form_ajaxify(&$element, &$form_state) {
     $element['#attributes']['id'] = 'webform-addmore-' . $cid;
   }
   else {
-    foreach (element_children($element) as $key) {
-      _webform_addmore_client_form_ajaxify($element[$key], $form_state);
+    if(!empty($element)){
+      foreach (element_children($element) as $key) {
+        _webform_addmore_client_form_ajaxify($element[$key], $form_state);
+      }
     }
   }
 }
