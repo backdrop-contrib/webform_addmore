@@ -100,6 +100,7 @@ function webform_addmore_form_webform_client_form_alter(&$form, &$form_state, $f
   $node = $form['#node'];
   if (_webform_addmore_webform_uses_addmore_get($node->nid)) {
     _webform_addmore_client_form_ajaxify($form['submitted'], $form_state);
+    $form['#validate'][] = 'webform_addmore_form_webform_client_form_validate';
   }
 }
 
@@ -154,7 +155,7 @@ function _webform_addmore_client_form_ajaxify(&$element, &$form_state) {
     $element['#attributes']['id'] = 'webform-addmore-' . $cid;
   }
   else {
-    if(!empty($element)){
+    if (!empty($element)) {
       foreach (element_children($element) as $key) {
         _webform_addmore_client_form_ajaxify($element[$key], $form_state);
       }
@@ -171,6 +172,25 @@ function _webform_addmore_element_unrequire(&$element) {
   $element['#required'] = FALSE;
   foreach (element_children($element) as $key) {
     _webform_addmore_element_unrequire($element[$key]);
+  }
+}
+
+/**
+ * Helper function. Recursively remove the
+ * add more element from $form_state values.
+ * @param array $values of a webform submission.
+ */
+function _webform_addmore_element_clean_values(&$values) {
+  if (empty($values) || !is_array($values)) {
+    return;
+  }
+  foreach (element_children($values) as $key) {
+    if ($key === 'webform_addmore') {
+      unset($values[$key]);
+    }
+    else {
+      _webform_addmore_element_clean_values($values[$key]);
+    }
   }
 }
 
@@ -218,4 +238,8 @@ function webform_addmore_form_webform_client_form_ajax($form, $form_state) {
       $return = $return[$field];
     }
   }
+}
+
+function webform_addmore_form_webform_client_form_validate(&$form, &$form_state) {
+  _webform_addmore_element_clean_values($form_state['values']['submitted']);
 }
