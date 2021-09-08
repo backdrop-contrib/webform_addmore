@@ -183,7 +183,7 @@ function _webform_addmore_element_unrequire(&$element) {
  * @param array $values of a webform submission.
  */
 function _webform_addmore_element_clean_values(&$values) {
-  if (empty($values) || !is_array($values)) {
+  if (empty($values) || !is_array($values) || count(array_filter($values)) != count($values)) {
     return;
   }
   foreach (element_children($values) as $key) {
