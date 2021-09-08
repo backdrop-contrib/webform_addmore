@@ -79,7 +79,7 @@ function webform_addmore_webform_component_render_alter(&$element, &$component) 
  * @param int $nid a webform node nid.
  */
 function _webform_addmore_webform_uses_addmore_set($nid) {
-  $nids = &drupal_static('_webform_addmore_webform_uses_addmore');
+  $nids = &backdrop_static('_webform_addmore_webform_uses_addmore');
   $nids[$nid] = $nid;
 }
 
@@ -89,7 +89,7 @@ function _webform_addmore_webform_uses_addmore_set($nid) {
  * @return int Either the $nid given as argument if found or 0 if not.
  */
 function _webform_addmore_webform_uses_addmore_get($nid) {
-  $nids = &drupal_static('_webform_addmore_webform_uses_addmore');
+  $nids = &backdrop_static('_webform_addmore_webform_uses_addmore');
   return !empty($nids[$nid]) ? $nids[$nid] : 0;
 }
 
@@ -119,11 +119,11 @@ function _webform_addmore_client_form_ajaxify(&$element, &$form_state) {
     }
     if (!empty($form_state['triggering_element']['#name'])) {
       if ($form_state['triggering_element']['#name'] === 'webformaddmore_add_' . $cid) {
-        $form_state['#webform_addmore'][$cid] ++;
+        $form_state['#webform_addmore'][$cid]++;
       }
       else {
         if ($form_state['triggering_element']['#name'] === 'webformaddmore_remove_' . $cid) {
-          $form_state['#webform_addmore'][$cid] --;
+          $form_state['#webform_addmore'][$cid]--;
         }
       }
     }
@@ -156,8 +156,10 @@ function _webform_addmore_client_form_ajaxify(&$element, &$form_state) {
   }
   else {
     if (!empty($element)) {
-      foreach (element_children($element) as $key) {
-        _webform_addmore_client_form_ajaxify($element[$key], $form_state);
+      if (count(element_children($element)) > 0) {
+        foreach (element_children($element) as $key) {
+          _webform_addmore_client_form_ajaxify($element[$key], $form_state);
+        }
       }
     }
   }
@@ -221,7 +223,7 @@ function _webform_addmore_element_add_buttons(&$element, $ops) {
     );
   }
   // Let other modules alter this.
-  drupal_alter('webform_addmore_buttons', $element);
+  backdrop_alter('webform_addmore_buttons', $element);
 }
 
 /**
@@ -240,6 +242,10 @@ function webform_addmore_form_webform_client_form_ajax($form, $form_state) {
   }
 }
 
+/**
+ * @todo Please document this function.
+ * @see http://drupal.org/node/1354
+ */
 function webform_addmore_form_webform_client_form_validate(&$form, &$form_state) {
   _webform_addmore_element_clean_values($form_state['values']['submitted']);
 }

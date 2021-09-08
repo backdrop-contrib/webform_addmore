@@ -2,6 +2,7 @@
 name = Webform Add More
 description = Webform add more fieldset setting.
 package = Webform
-core= 7.x
+type = module
+backdrop = 1.x
 
 dependencies[] = webform
