@@ -186,7 +186,7 @@ function _webform_addmore_element_clean_values(&$values) {
   if (empty($values) || !is_array($values) || count(array_filter($values)) != count($values)) {
     return;
   }
-  foreach (element_children($values) as $key) {
+  foreach ($values as $key => $value) {
     if ($key === 'webform_addmore') {
       unset($values[$key]);
     }
